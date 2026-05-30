@@ -1,0 +1,377 @@
+{
+  "slug": "nda-analyzer",
+  "name": "Nda Analyzer",
+  "domain": "Legal / NDA Review",
+  "target_user": "Domain operator, business owner, analyst, or team member who needs this workflow executed reliably.",
+  "core_job": "NDA → risk and negotiation guidance",
+  "deep_features": [
+    "one-way/mutual detection",
+    "confidentiality scope",
+    "term duration",
+    "residual knowledge risk",
+    "non-compete trap",
+    "redline suggestions",
+    "sign/negotiate/reject recommendation"
+  ],
+  "input_schema": [
+    {
+      "key": "nda",
+      "label": "NDA",
+      "type": "text",
+      "required": true,
+      "help": "Affects input: NDA.",
+      "affects": [
+        "prompt",
+        "workflow"
+      ],
+      "default": ""
+    },
+    {
+      "key": "work_brief",
+      "label": "Work brief / source text / URL / instructions",
+      "type": "textarea",
+      "required": true,
+      "default": "",
+      "help": "Paste the material, URL, description, or instruction needed for this project.",
+      "affects": [
+        "prompt",
+        "workflow"
+      ]
+    }
+  ],
+  "customization_schema": [
+    {
+      "key": "execution_mode",
+      "label": "Execution mode",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Draft",
+        "Production",
+        "Audit / strict review",
+        "JSON/API output"
+      ],
+      "default": "Production",
+      "help": "Controls strictness, depth, and output format for this project workflow.",
+      "affects": [
+        "workflow",
+        "validation",
+        "export"
+      ]
+    },
+    {
+      "key": "party_role",
+      "label": "party role",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: party role.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "options": [
+        "buyer/client",
+        "seller/vendor",
+        "employer",
+        "employee",
+        "landlord",
+        "tenant",
+        "disclosing party",
+        "receiving party",
+        "mutual",
+        "custom"
+      ],
+      "default": "buyer/client"
+    },
+    {
+      "key": "jurisdiction",
+      "label": "jurisdiction",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: jurisdiction.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "options": [
+        "United States",
+        "United Kingdom",
+        "European Union",
+        "Egypt",
+        "UAE",
+        "Saudi Arabia",
+        "Custom"
+      ],
+      "default": "United States"
+    },
+    {
+      "key": "company_size",
+      "label": "company size",
+      "type": "text",
+      "required": false,
+      "help": "Affects customization: company size.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "risk_tolerance",
+      "label": "risk tolerance",
+      "type": "slider",
+      "required": false,
+      "help": "Affects customization: risk tolerance.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "min": 0,
+      "max": 100,
+      "default": 50
+    },
+    {
+      "key": "negotiation_style",
+      "label": "negotiation style",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: negotiation style.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "fallback_clause_library",
+      "label": "fallback clause library",
+      "type": "text",
+      "required": false,
+      "help": "Affects customization: fallback clause library.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "default": ""
+    },
+    {
+      "key": "output_format",
+      "label": "output format",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: output format.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "options": [
+        "Markdown",
+        "JSON",
+        "CSV",
+        "PDF",
+        "DOCX",
+        "XLSX"
+      ],
+      "default": "Markdown"
+    },
+    {
+      "key": "language",
+      "label": "language",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: language.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "options": [
+        "English",
+        "Arabic",
+        "Egyptian Arabic",
+        "French",
+        "German",
+        "Spanish"
+      ],
+      "default": "English"
+    },
+    {
+      "key": "privacy_mode",
+      "label": "privacy mode",
+      "type": "select",
+      "required": false,
+      "help": "Affects customization: privacy mode.",
+      "affects": [
+        "prompt",
+        "validation",
+        "workflow",
+        "export"
+      ],
+      "options": [
+        "cloud allowed",
+        "local only",
+        "redact sensitive data"
+      ],
+      "default": "cloud allowed"
+    },
+    {
+      "key": "confidence_threshold",
+      "label": "Confidence threshold",
+      "type": "slider",
+      "required": false,
+      "min": 0,
+      "max": 100,
+      "default": 75,
+      "help": "Items below this confidence are escalated to the human review queue.",
+      "affects": [
+        "validation",
+        "workflow",
+        "export"
+      ]
+    }
+  ],
+  "workflow_steps": [
+    "NDA",
+    "risk and negotiation guidance"
+  ],
+  "ui_panels": [
+    "NDA viewer",
+    "risk cards",
+    "clause evidence",
+    "negotiation editor",
+    "decision summary"
+  ],
+  "output_formats": [
+    "risk memo",
+    "redlines",
+    "talking points",
+    "approval checklist"
+  ],
+  "integrations": [
+    "File upload",
+    "REST API",
+    "Export download",
+    "Job history"
+  ],
+  "guardrails": [
+    "Show uncertainty and confidence",
+    "Cite evidence from input when possible",
+    "Human review required for legal, medical, financial, hiring, or security decisions",
+    "Do not invent facts absent from input"
+  ],
+  "recommended_models": {
+    "drafting": "fast cloud or local instruct model",
+    "reasoning": "strong reasoning model",
+    "private_documents": "local model via Ollama/LM Studio/vLLM",
+    "vision_or_pdf": "vision-capable model when image pages are used"
+  },
+  "suite": "Legal & Compliance Suite",
+  "implementation_status": "real_local_engine_registered",
+  "analysis_modules": [
+    "legal_clause_scan",
+    "nda_risk",
+    "negotiation_notes"
+  ],
+  "output_sections": [
+    "NDA risk",
+    "Clause comments",
+    "Negotiation fallback",
+    "Obligations"
+  ],
+  "field_validations": [
+    {
+      "field": "jurisdiction",
+      "rule": "Require human review for legal/tax/country-specific rules; do not treat AI result as final authority."
+    },
+    {
+      "field": "risk_tolerance",
+      "rule": "Use selected risk tolerance to adjust severity labels and escalation threshold."
+    },
+    {
+      "field": "language",
+      "rule": "Preserve requested language in final deliverable unless source text requires bilingual output."
+    }
+  ],
+  "scorecards": [
+    "Risk severity",
+    "Evidence strength",
+    "Negotiation impact",
+    "Obligation urgency",
+    "Missing protection risk"
+  ],
+  "automation_hooks": [
+    {
+      "name": "save_job_snapshot",
+      "type": "internal",
+      "description": "Persist inputs, customization, uploads, output, and usage for audit/history."
+    },
+    {
+      "name": "export_pack",
+      "type": "internal",
+      "description": "Export Markdown, JSON, PDF, and DOCX from the completed job."
+    },
+    {
+      "name": "human_review_queue",
+      "type": "manual",
+      "description": "Flag low-confidence, legal/medical/finance/security/compliance-sensitive items for human review."
+    }
+  ],
+  "ux_profile": {
+    "name": "Legal Review Desk",
+    "accent": "#c084fc",
+    "layout": "Document intake → clause map → risk heatmap → negotiation/actions",
+    "hero": "Contract and compliance review UX with clause grids, obligation tracking, redline planning, and risk controls.",
+    "components": [
+      "Clause extraction grid",
+      "Risk heatmap",
+      "Obligation timeline",
+      "Redline/position panel",
+      "Negotiation checklist"
+    ],
+    "metrics": [
+      "Risk exposure",
+      "Missing clauses",
+      "Obligations found",
+      "Review readiness"
+    ],
+    "quick_actions": [
+      "Extract clauses",
+      "Build risk matrix",
+      "Create negotiation points",
+      "Prepare redline checklist"
+    ],
+    "review_lanes": [
+      "Read",
+      "Classify",
+      "Risk-rate",
+      "Negotiate",
+      "Finalize"
+    ],
+    "empty_state": "Paste legal text or upload a document. This is decision support, not legal advice.",
+    "icon": "⚖️",
+    "project_slug": "nda-analyzer",
+    "domain": "Legal / NDA Review"
+  },
+  "final_gui_status": {
+    "standalone_folder_gui": true,
+    "domain_specific_ux_profile": true,
+    "elegant_component_system": true,
+    "no_fake_live_data_policy": true,
+    "requires_real_connectors_for_external_actions": true
+  }
+}
